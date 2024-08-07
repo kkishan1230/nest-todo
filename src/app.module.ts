@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { ClassSerializerInterceptor, Module } from '@nestjs/common';
 import { TodoModule } from './todo/todo.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
@@ -8,6 +8,7 @@ import { UsersRepository } from './users/users.repository';
 import { User } from './users/user.entity';
 import { AuthModule } from './auth/auth.module';
 import { TodoRepository } from './todo/todo.repository';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -28,7 +29,12 @@ import { TodoRepository } from './todo/todo.repository';
     AuthModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ClassSerializerInterceptor,
+    },
+  ],
 })
 export class AppModule {
   constructor(private dataSource: DataSource) {}

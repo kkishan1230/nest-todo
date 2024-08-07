@@ -18,12 +18,12 @@ export class TodoService {
     if (!task) {
       throw new NotFoundException('Task not found');
     }
-    return { status: HttpStatus.OK, task };
+    const data = new TaskResponseDto(task);
+    return { data };
   }
 
   async getAllTasks() {
     let allTasks = await this.todoRepository.find();
-    allTasks = plainToInstance(TaskResponseDto, allTasks);
     return { status: HttpStatus.OK, allTasks };
   }
 
@@ -42,7 +42,7 @@ export class TodoService {
   }
 
   async updateTask(todoTaskDetails: TaskToUpdateDto, id: string) {
-    let { task } = await this.getTaskById(id);
+    let task = await this.getTaskById(id);
 
     await this.todoRepository.update(id, { ...task, ...todoTaskDetails });
 
