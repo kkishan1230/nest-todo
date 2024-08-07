@@ -51,3 +51,12 @@ transform: true,
 transformOptions: { enableImplicitConversion: true },
 }),
 );
+
+## App interceptor
+
+- Used APP_INTERCEPTOR for response DTO. So that sensitive data can not be exposed while sendig responses.
+
+{
+provide: APP_INTERCEPTOR,
+useClass: ClassSerializerInterceptor,
+}
