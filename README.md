@@ -39,3 +39,15 @@ $ npm run start:prod
 $ npm install class-validator
 $ npm install class-transformer
 ```
+
+## Whitelisting
+
+- Used useGlobalPipes for whitelisting field.
+
+app.useGlobalPipes(
+new ValidationPipe({
+whitelist: true,
+transform: true,
+transformOptions: { enableImplicitConversion: true },
+}),
+);
